@@ -18,7 +18,8 @@ def lru_cache(capacity):
                 else:
                     cache.move_to_end(key)
                 cache[key] = str(value)
-                return func(key,value)
+                return func(key, value)
+
             return wrapper
 
         if (str(func.__name__) == "get"):
@@ -29,6 +30,7 @@ def lru_cache(capacity):
                 else:
                     cache.move_to_end(key)
                     return cache[key]
+                return func(key)
 
             return wrapper
 
@@ -37,11 +39,8 @@ def lru_cache(capacity):
             def wrapper(key):
                 if key in cache:
                     del cache[key]
-                else:
-                    print("Key not found")
-                print(dict(cache))
+                return func(key)
 
             return wrapper
 
     return extracting_func
-

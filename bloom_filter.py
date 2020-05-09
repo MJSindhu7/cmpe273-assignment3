@@ -20,7 +20,6 @@ class BloomFilter(object):
 
     def add(self, item):
         digests = []
-        print("Adding key to bloom filter")
         for i in range(self.hash_count):
             dump = pickle.dumps(item)
             hash = hash_code_hex(dump)

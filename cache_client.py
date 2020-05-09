@@ -7,7 +7,7 @@ from server_config import NODES
 from pickle_hash import serialize_GET, serialize_PUT, serialize_DELETE
 from node_ring import NodeRing
 from lru_cache import lru_cache
-from BloomFilter import BloomFilter
+from bloom_filter import BloomFilter
 
 BUFFER_SIZE = 1024
 
@@ -35,7 +35,7 @@ bloomfilter = BloomFilter(itemCount, 0.05)
 
 
 # put functionality
-@lru_cache(3)
+#@lru_cache(3)
 def put(key, value):
     bloomfilter.add(key)
 
@@ -47,7 +47,7 @@ def get(key):
 
 
 #delete functionality
-@lru_cache(3)
+#@lru_cache(3)
 def delete(key):
     print("in deleete")
 

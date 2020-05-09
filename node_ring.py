@@ -2,12 +2,12 @@ import hashlib
 
 from server_config import NODES
 
-class NodeRing():
 
+class NodeRing():
     def __init__(self, nodes):
         assert len(nodes) > 0
         self.nodes = nodes
-    
+
     def get_node(self, key_hex):
         key = int(key_hex, 16)
         node_index = key % len(self.nodes)

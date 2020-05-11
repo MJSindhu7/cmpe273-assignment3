@@ -35,21 +35,40 @@ bloomfilter = BloomFilter(itemCount, 0.05)
 
 
 # put functionality
-#@lru_cache(3)
 def put(key, value):
     bloomfilter.add(key)
+    client_ring = NodeRing(clients)
+    data_bytes, key1 = serialize_PUT(value)
+    response = client_ring.get_node(key1).send(data_bytes)
+    print(response)
+    hash_codes.add(str(response.decode()))
+    return response
 
 
 # get functonality
-@lru_cache(3)
+@lru_cache(5)
 def get(key):
-    print("get from LRu")
+    if (bloomfilter.is_member(key)):
+        print("Found in bloom filter, fetching from server")
+        data_bytes, key1 = serialize_GET(key)
+        client_ring = NodeRing(clients)
+        print(client_ring.get_node(key1).send(data_bytes))
+        return client_ring.get_node(key1).send(data_bytes)
+    else:
+        return None
 
 
 #delete functionality
-#@lru_cache(3)
 def delete(key):
-    print("in deleete")
+    if (bloomfilter.is_member(key)):
+        data_bytes, key1 = serialize_DELETE(key)
+        client_ring = NodeRing(clients)
+        server_details = client_ring.get_node(key1)
+        response = server_details.send(data_bytes)
+        print(response)
+        return response
+    else:
+        return None
 
 
 def process(udp_clients):
@@ -58,9 +77,6 @@ def process(udp_clients):
     for u in USERS:
         data_bytes, key = serialize_PUT(u)
         put(key, u)
-        response = client_ring.get_node(key).send(data_bytes)
-        print(response)
-        hash_codes.add(str(response.decode()))
 
     print(
         f"Number of Users={len(USERS)}\nNumber of Users Cached={len(hash_codes)}"
@@ -69,27 +85,11 @@ def process(udp_clients):
     # GET all users.
     for hc in hash_codes:
         print(hc)
-        res = get(hc)
-        if (res == -1):
-            if (bloomfilter.is_member(hc) == False):
-                print("Not in bloomfilter")
-            else:
-                print("Found in bloom filter, fetching from server")
-                data_bytes, key = serialize_GET(hc)
-                response = client_ring.get_node(key).send(data_bytes)
-                print(response)
-        else:
-            print("from LRU cache")
-            print(res)
+        get(hc)
 
     #Delete all users
     for hc in hash_codes:
         delete(hc)
-        if (bloomfilter.is_member(hc)):
-            data_bytes, key = serialize_DELETE(hc)
-            server_details = client_ring.get_node(key)
-            response = server_details.send(data_bytes)
-            print(response)
 
 
 if __name__ == "__main__":

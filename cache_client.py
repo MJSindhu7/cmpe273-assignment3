@@ -52,8 +52,9 @@ def get(key):
         print("Found in bloom filter, fetching from server")
         data_bytes, key1 = serialize_GET(key)
         client_ring = NodeRing(clients)
-        print(client_ring.get_node(key1).send(data_bytes))
-        return client_ring.get_node(key1).send(data_bytes)
+        response = client_ring.get_node(key1).send(data_bytes)
+        print(response)
+        return response
     else:
         return None
 

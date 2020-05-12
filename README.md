@@ -23,6 +23,11 @@ _Response_
 }
 ```
 
+#### DELETE operation fulfilled
+
+![](Delete.png)
+
+
 ## 2. LRU Cache
 
 In order to reduce unnecessary network calls to the servers, you will be adding LRU cache on client side. On each GET call, you will be checking against data from a local cache.

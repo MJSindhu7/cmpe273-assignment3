@@ -116,7 +116,9 @@ _k_ hashes It depends on the size of the bit array (_m_) and no of elements or k
 [Reference_Link2](https://www.perl.com/pub/2004/04/08/bloom_filters.html/)
 
 
-Below is the snapshot of memory consumption for 1 million keys
+Below is the snapshot of statics for 1 million keys
+
+![](QUES.png)
 
 ```python
 @lru_cache(5)

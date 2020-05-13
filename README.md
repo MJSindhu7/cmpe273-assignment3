@@ -59,7 +59,7 @@ def delete(...):
 
 If a key is not in LRU cache then looking up for that key in bloom filter
 
-If a corresponding Key is present in LRU cache and returning from cache. 
+If a corresponding Key is present in LRU cache and returning the data from cache. 
 
 ![](LRU.png)
 

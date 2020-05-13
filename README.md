@@ -55,6 +55,22 @@ def delete(...):
 
 > Although you do not need to print execution time __[0.00000191s]__ and cache hit logs __[cache-hit]__, you should able to run test_lru_cache.py successfully without any errors in order to get full credits.
 
+### LRU Cache Implementation and screenshots
+
+If a key is not in LRU cache then looking up for that key in bloom filter
+
+If a corresponding Key is present in LRU cache and returning from cache. 
+
+![](LRU.png)
+
+
+### LRU cache test case
+
+LRU test case output
+
+![](LRU_TEST.png)
+
+
 ## 3. Bloom Filter
 
 Finally, you will be implementing a bloom filter so that we can validate any key lookup without hitting the servers. The bloom filter will have two operations:
@@ -92,6 +108,8 @@ Answer the following question:
 
 * What are the best _k_ hashes and _m_ bits values to store one million _n_ keys (E.g. e52f43cd2c23bb2e6296153748382764) suppose we use the same MD5 hash key from [pickle_hash.py](https://github.com/sithu/cmpe273-spring20/blob/master/midterm/pickle_hash.py#L14) and explain why?
 
+QUES
+
 ```python
 @lru_cache(5)
 def get(key):
@@ -113,6 +131,12 @@ def delete(key):
 ```
 
 You can validate your implementation using _test_bloom_filter.py_ and should get the expected output as test_bloom_filter_output.txt .
+
+### Bloom Filter Validation
+
+If a key is not found in LRU_CACHE. we will search bloom filter for that key, If bloom filter has that key then only we will hit the server for retrieval. We can reduce the false positive rate
+
+![](BLOOM_TEST.png)
 
 
 

@@ -66,7 +66,7 @@ def delete(key):
         client_ring = NodeRing(clients)
         server_details = client_ring.get_node(key1)
         response = server_details.send(data_bytes)
-        print(response)
+        #print(response)
         return response
     else:
         return None
